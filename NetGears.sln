@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{459F0707
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGears.Login", "src\NetGears.Login\NetGears.Login.csproj", "{536F0FA5-4E3F-4359-B7F1-17509074E589}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGears.Core", "src\NetGears.Core\NetGears.Core.csproj", "{8196EF38-D5F8-43EE-B6EC-79602F5F2CE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{536F0FA5-4E3F-4359-B7F1-17509074E589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{536F0FA5-4E3F-4359-B7F1-17509074E589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{536F0FA5-4E3F-4359-B7F1-17509074E589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8196EF38-D5F8-43EE-B6EC-79602F5F2CE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8196EF38-D5F8-43EE-B6EC-79602F5F2CE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8196EF38-D5F8-43EE-B6EC-79602F5F2CE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8196EF38-D5F8-43EE-B6EC-79602F5F2CE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
