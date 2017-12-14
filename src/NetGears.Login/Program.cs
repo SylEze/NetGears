@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NetGears
+namespace NetGears.Login
 {
     class Program
     {
