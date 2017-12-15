@@ -7,36 +7,36 @@ namespace NetGears.Core.Logger
 {
     public class Logger
     {
-        public static ILog Log;
+        private static ILog _log;
 
         public static void Initialize(ILog log)
         {
-            Log = log;
+            _log = log;
         }
 
         public static void Info(object message)
         {
-            Log?.Info($"{message}");
+            _log?.Info($"{message}");
         }
 
         public static void Debug(object message)
         {
-            Log?.Debug($"{message}");
+            _log?.Debug($"{message}");
         }
 
         public static void Warn(object message)
         {
-            Log?.Warn($"{message}");
+            _log?.Warn($"{message}");
         }
 
         public static void Error(object message, Exception ex = null)
         {
-            Log?.Error($"{message} {ex}");
+            _log?.Error($"{message} {ex}");
         }
 
         public static void Fatal(object message, Exception ex = null)
         {
-            Log?.Fatal($"{message} {ex}");
+            _log?.Fatal($"{message} {ex}");
         }
     }
 }
