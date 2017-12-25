@@ -10,14 +10,11 @@ namespace NetGears.Login
 {
     internal static class LoginServer
     {
-        private static ILog _log;
-
         private static void InitializeLogger()
         {
-            ILoggerRepository loggerRepository = LogManager.GetRepository(Assembly.GetExecutingAssembly());
+            ILoggerRepository loggerRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(loggerRepository, new FileInfo("log4net.config"));
-            _log = LogManager.GetLogger(typeof(LoginServer));
-            Logger.Initialize(_log);
+            Logger.Initialize(LogManager.GetLogger(typeof(LoginServer)));
         }
         
         private static void Initialize()
@@ -28,7 +25,7 @@ namespace NetGears.Login
         private static void Main(string[] args)
         {
             Initialize();
-            Console.WriteLine("Login server started");
+            Logger.Info("Login server started");
         }
     }
 }
