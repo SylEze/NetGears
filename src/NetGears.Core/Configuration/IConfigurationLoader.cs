@@ -2,7 +2,7 @@
 
 namespace NetGears.Core.Configuration
 {
-    public interface IConfiguration
+    public interface IConfigurationLoader
     {
         T Load<T>(string configPath);
 
