@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using log4net;
+using log4net.Config;
+using log4net.Repository;
 
 namespace NetGears.Core.Logger
 {
@@ -9,9 +13,11 @@ namespace NetGears.Core.Logger
     {
         private static ILog _log;
 
-        public static void Initialize(ILog log)
+        public static void Initialize(Type type)
         {
-            _log = log;
+            ILoggerRepository loggerRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            XmlConfigurator.Configure(loggerRepository, new FileInfo("log4net.config"));
+            _log = LogManager.GetLogger(type);
         }
 
         public static void Info(object message)
