@@ -4,11 +4,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\bin\login\netcoreapp2.0\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\bin\login\netcoreapp2.0\</OutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Ether.Network" Version="2.0.1" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
   </ItemGroup>
@@ -16,7 +19,7 @@
     <None Update="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="login.json">
+    <None Update="server.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

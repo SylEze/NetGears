@@ -11,16 +11,25 @@ namespace NetGears.Login
 {
     internal static class Program
     {
-        private static ServerConfiguration _serverConfiguration;
+        private const string Title = "NetGears - LoginServer";
+
+        private static LoginServer _server;
         
         private static void Main(string[] args)
         {
+            Console.Title = Title;
             Logger.Initialize(typeof(Program));
-            _serverConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>("login.json");
 
-            Logger.Info("Login server started");
-
-            ConfigurationLoader.Instance.Save<ServerConfiguration>(_serverConfiguration, "login.json");
+            try
+            {
+                _server = new LoginServer();
+                _server.Start();
+            }
+            catch (Exception e)
+            {
+                Logger.Fatal("Failed to start server", e);
+                _server.Dispose();
+            }
         }
     }
 }
