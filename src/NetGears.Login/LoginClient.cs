@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Ether.Network;
 using Ether.Network.Packets;
+using NetGears.Core.Logger;
 
 namespace NetGears.Login
 {
@@ -17,13 +18,13 @@ namespace NetGears.Login
 
         public override void HandleMessage(NetPacketBase packet)
         {
-            throw new NotImplementedException();
+            Logger.Debug($"{packet} sent by {Id}");
         }
 
-        public override void Dispose()
+        public void Disconnect()
         {
-            _loginServer.DisconnectClient(Id);
             base.Dispose();
+            _loginServer.DisconnectClient(Id);
         }
     }
 }

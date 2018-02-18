@@ -13,11 +13,13 @@ namespace NetGears.Login
         private const string LoginConfigurationPath = "login.json";
         private const string DatabaseConfigurationPath = "database.json";
 
-        private ServerConfiguration _serverConfiguration { get; }
+        private readonly ServerConfiguration _serverConfiguration;
+        private readonly DatabaseConfiguration _databaseConfiguration;
 
         public LoginServer()
         {
             _serverConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
+            _databaseConfiguration = ConfigurationLoader.Instance.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
 
             Configuration.Host = _serverConfiguration.Host;
             Configuration.Port = _serverConfiguration.Port;
@@ -33,6 +35,7 @@ namespace NetGears.Login
 
         protected override void OnClientConnected(LoginClient connection)
         {
+            connection.Initialize(this);
             Logger.Info($"New connected client, id:{connection.Id}");
         }
 
@@ -43,7 +46,8 @@ namespace NetGears.Login
 
         protected override void Dispose(bool disposing)
         {
-            ConfigurationLoader.Instance.Save<ServerConfiguration>(_serverConfiguration, ServerConfigurationPath);
+            ConfigurationLoader.Instance.Save(_serverConfiguration, ServerConfigurationPath);
+            ConfigurationLoader.Instance.Save(_databaseConfiguration, DatabaseConfigurationPath);
 
             base.Dispose(disposing);
 
