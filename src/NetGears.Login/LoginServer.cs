@@ -4,25 +4,23 @@ using System.Text;
 using Ether.Network;
 using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
+using NetGears.ORM;
+using NetGears.ORM.Entities;
 
 namespace NetGears.Login
 {
     public class LoginServer : NetServer<LoginClient>
     {
         private const string ServerConfigurationPath = "server.json";
-        private const string LoginConfigurationPath = "login.json";
-        private const string DatabaseConfigurationPath = "database.json";
 
-        private readonly ServerConfiguration _serverConfiguration;
-        private readonly DatabaseConfiguration _databaseConfiguration;
+        public ServerConfiguration ServerConfiguration { get; set; }
 
         public LoginServer()
         {
-            _serverConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
-            _databaseConfiguration = ConfigurationLoader.Instance.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            ServerConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
 
-            Configuration.Host = _serverConfiguration.Host;
-            Configuration.Port = _serverConfiguration.Port;
+            Configuration.Host = ServerConfiguration.Host;
+            Configuration.Port = ServerConfiguration.Port;
             Configuration.MaximumNumberOfConnections = 10;
             Configuration.Backlog = 100;
             Configuration.BufferSize = 4096;
@@ -46,9 +44,6 @@ namespace NetGears.Login
 
         protected override void Dispose(bool disposing)
         {
-            ConfigurationLoader.Instance.Save(_serverConfiguration, ServerConfigurationPath);
-            ConfigurationLoader.Instance.Save(_databaseConfiguration, DatabaseConfigurationPath);
-
             base.Dispose(disposing);
 
             Logger.Info("Server disposed");

@@ -23,7 +23,7 @@ namespace NetGears.Login
 
         public void Disconnect()
         {
-            base.Dispose();
+            Dispose();
             _loginServer.DisconnectClient(Id);
         }
     }

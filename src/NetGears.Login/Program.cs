@@ -29,7 +29,7 @@ namespace NetGears.Login
             catch (Exception e)
             {
                 Logger.Fatal("Failed to start server", e);
-                _server.Dispose();
+                _server?.Dispose();
             }
         }
     }
