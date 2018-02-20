@@ -6,6 +6,7 @@ namespace NetGears.GameData.Enums
 {
     public enum LoginPacketsId : short
     {
-        VERSION_PACKET = 1002
+        VERSION_PACKET = 1002,
+        ACCOUNT_PACKET = 1003
     }
 }
