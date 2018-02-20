@@ -4,7 +4,7 @@ using NetGears.GameData.Enums;
 namespace NetGears.GameData.Packets.Client
 {
     [PacketId((short)LoginPacketsId.VERSION_PACKET)]
-    [PacketLength(22)]
+    [PacketLength(25)]
     public class VersionPacket : PacketBase
     {
         public VersionPacket(byte[] buffer, object id) : base(buffer, id)
