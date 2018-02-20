@@ -33,18 +33,18 @@ namespace NetGears.Login
 
         protected override void Initialize()
         {
-            Logger.Info("Server initialized");
+            Logger.Info($"Server initialized on {Configuration.Host}:{Configuration.Port}");
         }
 
         protected override void OnClientConnected(LoginClient connection)
         {
             connection.Initialize(this);
-            Logger.Info($"New connected client, id:{connection.Id}");
+            Logger.Info($"Client {connection.Id} connected");
         }
 
         protected override void OnClientDisconnected(LoginClient connection)
         {
-            Logger.Info($"Client of id:{connection.Id} disconnected");
+            Logger.Info($"Client {connection.Id} disconnected");
         }
 
         protected override IReadOnlyCollection<NetPacketBase> SplitPackets(byte[] buffer)
