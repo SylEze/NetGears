@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Ether.Network;
+using Ether.Network.Packets;
 using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
-using NetGears.ORM;
-using NetGears.ORM.Entities;
+using NetGears.Core.Network;
+using NetGears.GameData.Packets;
+using NetGears.Login.Handlers;
 
 namespace NetGears.Login
 {
@@ -18,6 +19,10 @@ namespace NetGears.Login
         public LoginServer()
         {
             ServerConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
+
+            PacketFactory.Initialize<PacketBase>();
+            
+            PacketHandler.Initialize<AuthentificationHandler>();
 
             Configuration.Host = ServerConfiguration.Host;
             Configuration.Port = ServerConfiguration.Port;
@@ -40,6 +45,11 @@ namespace NetGears.Login
         protected override void OnClientDisconnected(LoginClient connection)
         {
             Logger.Info($"Client of id:{connection.Id} disconnected");
+        }
+
+        protected override IReadOnlyCollection<NetPacketBase> SplitPackets(byte[] buffer)
+        {
+            return PacketFactory.Deserialize<PacketBase>(buffer);
         }
 
         protected override void Dispose(bool disposing)

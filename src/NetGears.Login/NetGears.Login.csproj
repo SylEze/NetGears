@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
+    <ProjectReference Include="..\NetGears.GameData\NetGears.GameData.csproj" />
     <ProjectReference Include="..\NetGears.ORM\NetGears.ORM.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -23,7 +24,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="server.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Reflection;
 using Ether.Network;
 using Ether.Network.Packets;
 using NetGears.Core.Logger;
+using NetGears.Core.Network;
+using NetGears.GameData.Packets;
 
 namespace NetGears.Login
 {
-    public class LoginClient : NetConnection
+    public class LoginClient : NetConnection, IClient
     {
-        private LoginServer _loginServer { get; set; }
+        public LoginServer LoginServer { get; set; }
 
         public void Initialize(LoginServer loginServer)
         {
-            _loginServer = loginServer;
+            LoginServer = loginServer;
         }
 
         public override void HandleMessage(NetPacketBase packet)
         {
-            Logger.Debug($"{packet} sent by {Id}");
+            var deserializedPacket = packet as PacketBase;
+
+            PacketHandler.Invoke(deserializedPacket?.Id, this, deserializedPacket);
         }
 
         public void Disconnect()
         {
             Dispose();
-            _loginServer.DisconnectClient(Id);
+            LoginServer.DisconnectClient(Id);
         }
     }
 }
