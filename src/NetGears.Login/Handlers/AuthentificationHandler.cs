@@ -19,5 +19,14 @@ namespace NetGears.Login.Handlers
             
             Logger.Info($"check version {client.Id}");
         }
+
+        [PacketId((short) LoginPacketsId.ACCOUNT_PACKET)]
+        public static void CheckUserCredentials(IClient client, IPacket packet)
+        {
+            var loginClient = client as LoginClient;
+            var accountPacket = packet as AccountPacket;
+
+            Logger.Info($"account {accountPacket?.Username} {accountPacket?.Password}");
+        }
     }
 }
