@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using NetGears.Core.Network;
-using NetGears.GameData.Enums;
+using NetGears.Game.Enums;
 
-namespace NetGears.GameData.Packets.Client
+namespace NetGears.Game.Packets.Client
 {
-    [PacketId((short)LoginPacketsId.ACCOUNT_PACKET)]
-    [PacketLength(55)]
+    [PacketHeader((short)LoginPacketId.ACCOUNT_PACKET, 55)]
     public class AccountPacket : PacketBase
     {
-        public AccountPacket(byte[] buffer, object id) : base(buffer, id) { }
-
+        public AccountPacket(byte[] buffer) : base(buffer) { }
+        
         public string Username { get; set; }
 
         public string Password { get; set; }

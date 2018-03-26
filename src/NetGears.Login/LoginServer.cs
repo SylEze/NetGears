@@ -5,8 +5,9 @@ using Ether.Network.Packets;
 using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
 using NetGears.Core.Network;
-using NetGears.GameData.Packets;
+using NetGears.Game.Packets;
 using NetGears.Login.Handlers;
+using NetGears.ORM;
 
 namespace NetGears.Login
 {
@@ -16,19 +17,23 @@ namespace NetGears.Login
 
         public ServerConfiguration ServerConfiguration { get; set; }
 
+        public NetGearsContext Database { get; set; }
+
         public LoginServer()
         {
             ServerConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
-
-            PacketFactory.Initialize<PacketBase>();
             
-            PacketHandler.Initialize<AuthentificationHandler>();
+            PacketFactory<PacketBase, PacketHeaderAttribute>.Initialize();
+
+            PacketHandler<LoginClient, PacketBase>.LoadFrom<AuthentificationHandler>();
 
             Configuration.Host = ServerConfiguration.Host;
             Configuration.Port = ServerConfiguration.Port;
             Configuration.MaximumNumberOfConnections = 10;
             Configuration.Backlog = 100;
             Configuration.BufferSize = 4096;
+
+            Database = new NetGearsContext();
         }
 
         protected override void Initialize()
@@ -49,7 +54,8 @@ namespace NetGears.Login
 
         protected override IReadOnlyCollection<NetPacketBase> SplitPackets(byte[] buffer)
         {
-            return PacketFactory.Deserialize<PacketBase>(buffer);
+            return PacketFactory<PacketBase, PacketHeaderAttribute>.Deserialize(buffer, PacketDeserializeHelper.DeserializeBuffer) 
+                as IReadOnlyCollection<NetPacketBase>;
         }
 
         protected override void Dispose(bool disposing)

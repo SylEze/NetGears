@@ -1,13 +1,12 @@
 ﻿using NetGears.Core.Network;
-using NetGears.GameData.Enums;
+using NetGears.Game.Enums;
 
-namespace NetGears.GameData.Packets.Client
+namespace NetGears.Game.Packets.Client
 {
-    [PacketId((short)LoginPacketsId.VERSION_PACKET)]
-    [PacketLength(42)]
+    [PacketHeader((short)LoginPacketId.VERSION_PACKET, 42)]
     public class VersionPacket : PacketBase
     {
-        public VersionPacket(byte[] buffer, object id) : base(buffer, id)
+        public VersionPacket(byte[] buffer) : base(buffer)
         {
             
         }

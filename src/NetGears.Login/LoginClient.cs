@@ -3,11 +3,11 @@ using Ether.Network;
 using Ether.Network.Packets;
 using NetGears.Core.Logger;
 using NetGears.Core.Network;
-using NetGears.GameData.Packets;
+using NetGears.Game.Packets;
 
 namespace NetGears.Login
 {
-    public class LoginClient : NetConnection, IClient
+    public class LoginClient : NetConnection
     {
         public LoginServer LoginServer { get; set; }
 
@@ -20,7 +20,7 @@ namespace NetGears.Login
         {
             var deserializedPacket = packet as PacketBase;
 
-            PacketHandler.Invoke(deserializedPacket?.Id, this, deserializedPacket);
+            PacketHandler<LoginClient, PacketBase>.Invoke(this, deserializedPacket);
         }
 
         public void Disconnect()

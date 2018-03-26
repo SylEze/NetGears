@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>NetGears.Game</AssemblyName>
+    <RootNamespace>NetGears.Game</RootNamespace>
+    <OutputPath>C:\Users\Syl\Documents\NetGears\bin\game\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

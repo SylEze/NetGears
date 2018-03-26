@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NetGears.GameData.Enums
+namespace NetGears.Game.Enums
 {
-    public enum LoginPacketsId : short
+    public enum LoginPacketId : short
     {
         VERSION_PACKET = 1002,
         ACCOUNT_PACKET = 1003
