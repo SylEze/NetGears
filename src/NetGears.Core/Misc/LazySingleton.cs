@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NetGears.Core.Misc
 {
-    public class Singleton<T> where T : class, new()
+    public class LazySingleton<T> where T : class, new()
     {
         private static T _instance;
 

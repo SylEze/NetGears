@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using NetGears.Core.Misc;
 using Newtonsoft.Json;
+using NetGears.Core.Misc;
 
 namespace NetGears.Core.Configuration
 {
-    public sealed class ConfigurationLoader : Singleton<ConfigurationLoader>, IConfigurationLoader
+    public sealed class ConfigurationLoader : LazySingleton<ConfigurationLoader>, IConfigurationLoader
     {
         public T Load<T>(string configPath)
         {
