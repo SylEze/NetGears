@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 dotnet restore
 dotnet build src/NetGears.Core
