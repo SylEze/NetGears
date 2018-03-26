@@ -1,0 +1,11 @@
+language: csharp
+sudo: required
+
+install:
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./NetGears.sln
+
+before_script:
+  - chmod +x ./.travis/build.sh
+
+script:
+  - ./.travis/build.sh
