@@ -2,13 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
-using NetGears.ORM;
-using System;
 
-namespace NetGears.ORM.Migrations
+namespace NetGears.Database.Migrations
 {
     [DbContext(typeof(NetGearsContext))]
     partial class NetGearsContextModelSnapshot : ModelSnapshot

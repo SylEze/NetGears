@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetGears.ORM.Entities
+﻿namespace NetGears.Database.Entities
 {
     public class Account
     {

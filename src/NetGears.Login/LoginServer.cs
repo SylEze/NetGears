@@ -7,7 +7,6 @@ using NetGears.Core.Logger;
 using NetGears.Core.Network;
 using NetGears.Game.Packets;
 using NetGears.Login.Handlers;
-using NetGears.ORM;
 
 namespace NetGears.Login
 {
@@ -16,8 +15,6 @@ namespace NetGears.Login
         private const string ServerConfigurationPath = "server.json";
 
         public ServerConfiguration ServerConfiguration { get; set; }
-
-        public NetGearsContext Database { get; set; }
 
         public LoginServer()
         {
@@ -32,8 +29,6 @@ namespace NetGears.Login
             Configuration.MaximumNumberOfConnections = 10;
             Configuration.Backlog = 100;
             Configuration.BufferSize = 4096;
-
-            Database = new NetGearsContext();
         }
 
         protected override void Initialize()

@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
-namespace NetGears.ORM.Migrations
+namespace NetGears.Database.Migrations
 {
     public partial class AddAccount : Migration
     {

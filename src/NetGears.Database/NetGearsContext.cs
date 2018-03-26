@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NetGears.Core.Configuration;
-using NetGears.ORM.Entities;
+using NetGears.Database.Entities;
 
-namespace NetGears.ORM
+namespace NetGears.Database
 {
     public class NetGearsContext : DbContext
     {

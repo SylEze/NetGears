@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
     <ProjectReference Include="..\NetGears.Game\NetGears.Game.csproj" />
-    <ProjectReference Include="..\NetGears.ORM\NetGears.ORM.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="database.json">
