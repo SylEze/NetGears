@@ -3,9 +3,9 @@ using NetGears.Database;
 using NetGears.Game.Packets;
 using NetGears.Game.Packets.Client;
 
-namespace NetGears.Login.Handlers
+namespace NetGears.Login
 {
-    public class AuthentificationHandler
+    public class LoginPacketHandler
     {
         public static void CheckVersion(LoginClient client, VersionPacket packet)
         {
