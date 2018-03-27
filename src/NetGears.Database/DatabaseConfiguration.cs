@@ -13,6 +13,9 @@ namespace NetGears.Database
         
         [DataMember(Name = "host")]
         public string Host { get; set; }
+
+        [DataMember(Name = "port")]
+        public ushort Port { get; set; }
         
         [DataMember(Name = "user")]
         public string User { get; set; }

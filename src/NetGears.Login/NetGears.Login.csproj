@@ -23,9 +23,6 @@
     <ProjectReference Include="..\NetGears.Game\NetGears.Game.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="database.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

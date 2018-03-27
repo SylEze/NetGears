@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
 
 namespace NetGears.Database
 {
-    public static class DatabaseHelper
+    public class DatabaseFactory : IDesignTimeDbContextFactory<NetGearsContext>
     {
         private const string DatabaseConfigurationPath = "database.json";
 
@@ -32,6 +34,16 @@ namespace NetGears.Database
             }
 
             return new NetGearsContext(DatabaseConfiguration);
+        }
+
+        public NetGearsContext CreateDbContext(string[] args)
+        {
+            var dbConfiguration = ConfigurationLoader.Instance.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+
+            if (dbConfiguration == null)
+                throw new Exception("Cannot load database configuration");
+
+            return new NetGearsContext(dbConfiguration);
         }
     }
 }

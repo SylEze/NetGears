@@ -32,7 +32,7 @@ namespace NetGears.Database
                     break;
                 case DatabaseProvider.MySQL:
                     optionsBuilder.UseMySql(
-                        $"Server={DatabaseConfiguration.Host};Database={DatabaseConfiguration.DatabaseName};" +
+                        $"Server={DatabaseConfiguration.Host};Port={DatabaseConfiguration.Port};Database={DatabaseConfiguration.DatabaseName};" +
                         $"Uid={DatabaseConfiguration.User};Pwd={DatabaseConfiguration.Password};");
                     break;
                 default:

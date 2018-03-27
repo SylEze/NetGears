@@ -17,7 +17,7 @@ namespace NetGears.Login
 
             try
             {
-                DatabaseHelper.Initialize();
+                DatabaseFactory.Initialize();
                 _server = new LoginServer();
                 _server.Start();
             }
