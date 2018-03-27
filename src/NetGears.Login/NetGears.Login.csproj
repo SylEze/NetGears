@@ -16,6 +16,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
+    <ProjectReference Include="..\NetGears.Database\NetGears.Database.csproj">
+      <Project>{AF10C738-1287-47F4-90E9-0EBF98016F74}</Project>
+      <Name>NetGears.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetGears.Game\NetGears.Game.csproj" />
   </ItemGroup>
   <ItemGroup>

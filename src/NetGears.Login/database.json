@@ -1,4 +1,7 @@
 {
-  "host": "localhost",
+  "databaseProvider": "MySQL",
+  "host": "localhost:3306",
+  "user": "root",
+  "password": "test",
   "databaseName": "netgears" 
 }
