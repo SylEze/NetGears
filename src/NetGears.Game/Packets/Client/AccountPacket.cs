@@ -6,7 +6,7 @@ using NetGears.Game.Enums;
 
 namespace NetGears.Game.Packets.Client
 {
-    [PacketHeader((short)LoginPacketId.ACCOUNT_PACKET, 55)]
+    [PacketHeader((short)LoginPacketId.ACCOUNT_PACKET, 56)]
     public class AccountPacket : PacketBase
     {
         public AccountPacket(byte[] buffer) : base(buffer) { }
@@ -17,8 +17,8 @@ namespace NetGears.Game.Packets.Client
 
         public override void Deserialize()
         {
-            Username = Encoding.Default.GetString(Buffer, 3, 19);
-            Password = Encoding.Default.GetString(Buffer, 22, 32);
+            Username = Encoding.Default.GetString(Buffer, 5, 19).Replace("\0", String.Empty);
+            Password = Encoding.Default.GetString(Buffer, 22, 32).Replace("\0", String.Empty);
         }
     }
 }
