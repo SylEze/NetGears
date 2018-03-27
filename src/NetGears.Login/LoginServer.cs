@@ -12,13 +12,15 @@ namespace NetGears.Login
 {
     public class LoginServer : NetServer<LoginClient>
     {
-        private const string ServerConfigurationPath = "server.json";
+        private const string ServerConfigurationPath = "login.json";
 
         public ServerConfiguration ServerConfiguration { get; set; }
 
         public LoginServer()
         {
             ServerConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
+
+            Logger.Info("Server configuration loaded.");
             
             PacketFactory<PacketBase, PacketHeaderAttribute>.Initialize();
 
