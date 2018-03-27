@@ -1,0 +1,24 @@
+version: 1.0.{build}
+
+image: Visual Studio 2017
+
+configuration: Debug
+
+platform: Any CPU
+
+before_build:
+- nuget restore
+- dotnet restore
+
+build:
+  project: NetGears.sln
+  verbosity: minimal
+
+notifications:
+- provider: Email
+  to:
+  - syleze.contact@gmail.com
+  subject: '[NetGears] appveyor build status'
+  on_build_success: true
+  on_build_failure: true
+  on_build_status_changed: true
