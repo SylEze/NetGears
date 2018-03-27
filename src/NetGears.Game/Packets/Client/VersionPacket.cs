@@ -3,7 +3,7 @@ using NetGears.Game.Enums;
 
 namespace NetGears.Game.Packets.Client
 {
-    [PacketHeader((short)LoginPacketId.VERSION_PACKET, 42)]
+    [PacketHeader((short)LoginPacketId.VERSION_PACKET, 44)]
     public class VersionPacket : PacketBase
     {
         public VersionPacket(byte[] buffer) : base(buffer)
