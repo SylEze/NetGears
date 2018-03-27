@@ -1,6 +1,6 @@
 ﻿namespace NetGears.Database.Entities
 {
-    public class Account
+    public class Account : IEntity
     {
         public long Id { get; set; }
 
