@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NetGears.Core.Extensions;
+using NetGears.Core.Logger;
 using NetGears.Core.Misc;
 
 namespace NetGears.Game.Packets
@@ -11,35 +12,49 @@ namespace NetGears.Game.Packets
         {
             var result = new List<PacketBase>();
 
-            for (var i = 0; i < buffer.Length; i++)
+            var bufferIndex = 0;
+
+            deserialize:
+
+            //A StreetGears packet shouldn't have a length inferior than 5
+            if (buffer.Length - bufferIndex < 5)
             {
-                if (i + 1 < buffer.Length)
-                {
-                    //Get packet unique id
-                    var id = BitConverter.ToInt16(buffer, i);
+                return result;
+            }
 
-                    var packet = GetPacket(id, ref buffer, ref i, ref packetTypes);
+            var length = BitConverter.ToInt16(buffer, bufferIndex);
+            var id = BitConverter.ToInt16(buffer, bufferIndex + 2);
+            var hash = (int) buffer[bufferIndex + 4];
 
-                    if (packet != null)
-                    {
-                        packet?.Deserialize();
+            if (buffer.Length < bufferIndex + length)
+            {
+                return result;
+            }
 
-                        result.Add(packet);
-                    }
-                }
+            var buff = buffer.GetSubArray(bufferIndex, length);
+            var packet = GetPacket(id, buff, packetTypes);
+
+            bufferIndex += length;
+
+            packet?.Deserialize();
+
+            result.Add(packet);
+
+            if (bufferIndex < buffer.Length)
+            {
+                goto deserialize;
             }
 
             return result;
         }
 
-        private static PacketBase GetPacket(short id, ref byte[] buffer, ref int index, ref Dictionary<PacketHeaderAttribute, Type> packetTypes)
+        private static PacketBase GetPacket(int id, byte[] buffer, Dictionary<PacketHeaderAttribute, Type> packetTypes)
         {
             foreach (var packetType in packetTypes)
             {
                 if (packetType.Key.Id == id)
                 {
-                    var result =  InstanceHelper.CreateInstanceOf<PacketBase>(packetType.Value, buffer.GetSubArray(index, packetType.Key.Length));
-                    index += packetType.Key.Length;
+                    var result =  InstanceHelper.CreateInstanceOf<PacketBase>(packetType.Value, buffer);
                     return result;
                 }
             }
