@@ -51,8 +51,7 @@ namespace NetGears.Login
 
         protected override IReadOnlyCollection<NetPacketBase> SplitPackets(byte[] buffer)
         {
-            return PacketFactory<PacketBase, PacketHeaderAttribute>.Deserialize(buffer, PacketDeserializeHelper.DeserializeBuffer) 
-                as IReadOnlyCollection<NetPacketBase>;
+            return PacketFactory<PacketBase, PacketHeaderAttribute>.Deserialize(buffer, PacketDeserializeHelper.DeserializeBuffer);
         }
 
         protected override void Dispose(bool disposing)

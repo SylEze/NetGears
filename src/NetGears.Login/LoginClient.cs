@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using Ether.Network;
+﻿using Ether.Network;
 using Ether.Network.Packets;
-using NetGears.Core.Logger;
 using NetGears.Core.Network;
 using NetGears.Game.Packets;
 
@@ -20,7 +18,10 @@ namespace NetGears.Login
         {
             var deserializedPacket = packet as PacketBase;
 
-            PacketHandler<LoginClient, PacketBase>.Invoke(this, deserializedPacket);
+            if (packet == null)
+                return;
+
+            PacketHandler<LoginClient, PacketBase>.ExecuteHandler(this, deserializedPacket);
         }
 
         public void Disconnect()
