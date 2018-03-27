@@ -1,0 +1,7 @@
+{
+  "databaseProvider": "SQLServer",
+  "host": "localhost",
+  "user": "root",
+  "password": "test",
+  "databaseName": "netgears"
+}
