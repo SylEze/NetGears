@@ -41,9 +41,9 @@ namespace NetGears.Game.Packets
             }
         }
 
-        public static IList<TPacketBase> Deserialize(byte[] buffer, DeserializeMethod deserializeMethod)
+        public static IReadOnlyCollection<TPacketBase> Deserialize(byte[] buffer, DeserializeMethod deserializeMethod)
         {
-            return deserializeMethod(buffer, PacketTypes);
+            return deserializeMethod(buffer, PacketTypes).ToList().AsReadOnly();
         }
     }
 }

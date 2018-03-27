@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 
 namespace NetGears.Core.Network
 {
@@ -13,45 +15,53 @@ namespace NetGears.Core.Network
         /// Dictionary which contains method references to invoke
         /// Each key corresponds to a packet header defined by the user
         /// </summary>
-        private static readonly Dictionary<Type, MethodInfo> MethodReferences = new Dictionary<Type, MethodInfo>();
+        private static readonly Dictionary<Type, Delegate> MethodReferences = new Dictionary<Type, Delegate>();
 
         public static void LoadFrom<T>()
         {
             IEnumerable<MethodInfo> methods = typeof(T).GetMethods()
-                .Where(m => m.IsPublic && m.IsStatic)
-                .ToList();
+                .Where(m => m.IsPublic && m.IsStatic);
 
             foreach (var method in methods)
             {
-                var parameters = method.GetParameters();
+                var parameters = method.GetParameters()
+                    .Select(p => Expression.Parameter(p.ParameterType, p.Name))
+                    .ToArray();
 
                 if (parameters.Length != 2)
                 {
                     throw new ArgumentException($"There must be two arguments in handler method: ${method.Name}");
                 }
-                if (parameters[0].ParameterType != typeof(TClient))
+                if (parameters[0].Type != typeof(TClient))
                 {
-                    throw new ArgumentException($"${method.Name} First argument must be of type: ${nameof(TClient)}\tWas of type: ${parameters[0].ParameterType}");
+                    throw new ArgumentException($"${method.Name} First argument must be of type: ${typeof(TClient)}\tWas of type: ${parameters[0].Type}");
                 }
-                if (parameters[1].ParameterType.BaseType != typeof(TPacketBase))
+                if (parameters[1].Type.BaseType != typeof(TPacketBase))
                 {
-                    throw new ArgumentException($"${method.Name} Second argument must derived from : ${nameof(TPacketBase)}\tWas of type: ${parameters[1].ParameterType}");
+                    throw new ArgumentException($"${method.Name} Second argument must derived from : ${typeof(TPacketBase)}\tWas of type: ${parameters[1].Type}");
                 }
-                
-                MethodReferences.Add(parameters[1].ParameterType, method);
+                if (!method.IsStatic)
+                {
+                    throw new ArgumentException("The provided method must be static.", "method");
+                }
+
+                if (method.IsGenericMethod)
+                {
+                    throw new ArgumentException("The provided method must not be generic.", "method");
+                }
+
+                var deleg = method.CreateDelegate(Expression.GetDelegateType(
+                    (from parameter in method.GetParameters() select parameter.ParameterType)
+                    .Concat(new[] { method.ReturnType })
+                    .ToArray()));
+
+                MethodReferences.Add(parameters[1].Type, deleg);
             }
         }
 
-        public static void Invoke(TClient invoker, TPacketBase packet)
+        public static void ExecuteHandler(TClient invoker, TPacketBase packet)
         {
-            try
-            {
-                MethodReferences[packet.GetType()].Invoke(null, new object[] { invoker, packet });
-            }
-            catch (Exception e)
-            {
-                Logger.Logger.Error($"An error occured while executing handler method for packet type {typeof(TPacketBase).ToString()}", e);
-            }
+            MethodReferences[packet.GetType()].DynamicInvoke(invoker, packet);
         }
     }
 }
