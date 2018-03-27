@@ -21,16 +21,19 @@ namespace NetGears.Database.Repositories
         public void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
+            _context.SaveChanges();
         }
 
         public void Update(TEntity entity)
         {
             _context.Set<TEntity>().Update(entity);
+            _context.SaveChanges();
         }
 
         public void Remove(TEntity entity)
         {
             _context.Set<TEntity>().Remove(entity);
+            _context.SaveChanges();
         }
 
         public TEntity Get(long id)
