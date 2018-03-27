@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using log4net;
-using log4net.Config;
-using log4net.Repository;
-using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
+using NetGears.Database;
 
 namespace NetGears.Login
 {
@@ -23,6 +17,7 @@ namespace NetGears.Login
 
             try
             {
+                DatabaseHelper.Initialize();
                 _server = new LoginServer();
                 _server.Start();
             }
