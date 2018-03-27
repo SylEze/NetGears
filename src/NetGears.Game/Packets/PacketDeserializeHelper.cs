@@ -24,7 +24,7 @@ namespace NetGears.Game.Packets
 
             var length = BitConverter.ToInt16(buffer, bufferIndex);
             var id = BitConverter.ToInt16(buffer, bufferIndex + 2);
-            var hash = (int) buffer[bufferIndex + 4];
+            var hash = buffer[bufferIndex + 4];
 
             if (buffer.Length < bufferIndex + length)
             {
@@ -32,7 +32,7 @@ namespace NetGears.Game.Packets
             }
 
             var buff = buffer.GetSubArray(bufferIndex, length);
-            var packet = GetPacket(id, buff, packetTypes);
+            var packet = GetPacket(id, length, hash, buff, packetTypes);
 
             bufferIndex += length;
 
@@ -48,13 +48,16 @@ namespace NetGears.Game.Packets
             return result;
         }
 
-        private static PacketBase GetPacket(int id, byte[] buffer, Dictionary<PacketHeaderAttribute, Type> packetTypes)
+        private static PacketBase GetPacket(short id, short length, byte hash, byte[] buffer, Dictionary<PacketHeaderAttribute, Type> packetTypes)
         {
             foreach (var packetType in packetTypes)
             {
                 if (packetType.Key.Id == id)
                 {
-                    var result =  InstanceHelper.CreateInstanceOf<PacketBase>(packetType.Value, buffer);
+                    var result = InstanceHelper.CreateInstanceOf<PacketBase>(packetType.Value, buffer);
+                    result.Id = id;
+                    result.Length = length;
+                    result.Hash = hash;
                     return result;
                 }
             }

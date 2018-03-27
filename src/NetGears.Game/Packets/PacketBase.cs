@@ -4,12 +4,18 @@ using System;
 
 namespace NetGears.Game.Packets
 {
-    public class PacketBase : NetPacketBase
+    public abstract class PacketBase : NetPacketBase
     {
         public PacketBase(byte[] buffer)
         {
             Buffer = buffer;
         }
+
+        public short Id { get; set; }
+
+        public short Length { get; set; }
+
+        public byte Hash { get; set; }
 
         public override byte[] Buffer { get; }
 
