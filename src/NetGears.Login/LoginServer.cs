@@ -6,7 +6,6 @@ using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
 using NetGears.Core.Network;
 using NetGears.Game.Packets;
-using NetGears.Login.Handlers;
 
 namespace NetGears.Login
 {
