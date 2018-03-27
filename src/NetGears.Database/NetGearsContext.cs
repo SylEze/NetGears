@@ -39,6 +39,7 @@ namespace NetGears.Database
                     throw new NotImplementedException("The selected database provider is not yet implemented " +
                                                       "or does not exist. Please change your database.json");
             }
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
