@@ -24,7 +24,7 @@ namespace NetGears.Login
             
             PacketFactory<PacketBase, PacketHeaderAttribute>.Initialize();
 
-            PacketHandler<LoginClient, PacketBase>.LoadFrom<AuthentificationHandler>();
+            PacketHandler<LoginClient, PacketBase>.LoadFrom<LoginPacketHandler>();
 
             Configuration.Host = ServerConfiguration.Host;
             Configuration.Port = ServerConfiguration.Port;
