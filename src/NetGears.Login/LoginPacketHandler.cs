@@ -1,6 +1,5 @@
 ﻿using NetGears.Core.Logger;
 using NetGears.Database;
-using NetGears.Game.Packets;
 using NetGears.Game.Packets.Client;
 
 namespace NetGears.Login

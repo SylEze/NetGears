@@ -9,11 +9,10 @@ namespace NetGears.Core.Misc
 {
     public static class InstanceHelper
     {
-        private delegate T ObjectActivator<T>(params object[] args);
+        private delegate T ObjectActivator<out T>(params object[] args);
 
         private static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
         {
-            var type = ctor.DeclaringType;
             ParameterInfo[] paramsInfo = ctor.GetParameters();
             ParameterExpression paramExp = Expression.Parameter(typeof(object[]), "args");
             Expression[] argsExp =  new Expression[paramsInfo.Length];

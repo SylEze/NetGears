@@ -11,7 +11,7 @@ namespace NetGears.Game.Packets
 
         public int Length { get; set; }
 
-        public PacketHeaderAttribute(short id, int length = 0)
+        public PacketHeaderAttribute(short id, int length)
         {
             Id = id;
             Length = length;

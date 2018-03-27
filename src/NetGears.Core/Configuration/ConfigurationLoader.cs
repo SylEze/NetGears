@@ -5,9 +5,9 @@ using NetGears.Core.Misc;
 
 namespace NetGears.Core.Configuration
 {
-    public sealed class ConfigurationLoader : LazySingleton<ConfigurationLoader>, IConfigurationLoader
+    public static class ConfigurationLoader
     {
-        public T Load<T>(string configPath)
+        public static T Load<T>(string configPath)
         {
             string data = string.Empty;
             T result;
@@ -35,7 +35,7 @@ namespace NetGears.Core.Configuration
             return result;
         }
 
-        public bool Save<T>(T configuration, string configPath)
+        public static bool Save<T>(T configuration, string configPath)
         {
             string result = JsonConvert.SerializeObject(configuration);
 

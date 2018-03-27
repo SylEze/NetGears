@@ -17,7 +17,7 @@ namespace NetGears.Login
 
         public LoginServer()
         {
-            ServerConfiguration = ConfigurationLoader.Instance.Load<ServerConfiguration>(ServerConfigurationPath);
+            ServerConfiguration = ConfigurationLoader.Load<ServerConfiguration>(ServerConfigurationPath);
 
             Logger.Info("Server configuration loaded.");
             

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using NetGears.Core.Configuration;
 using NetGears.Core.Logger;
@@ -18,10 +15,10 @@ namespace NetGears.Database
         {
             if (DatabaseConfiguration != null)
             {
-                throw new Exception("DatabaseHelper already initialised.");
+                throw new DatabaseException("DatabaseHelper already initialised.");
             }
 
-            DatabaseConfiguration = ConfigurationLoader.Instance.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            DatabaseConfiguration = ConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
 
             Logger.Info("Database configuration loaded.");
         }
@@ -30,7 +27,7 @@ namespace NetGears.Database
         {
             if (DatabaseConfiguration == null)
             {
-                throw new Exception("DatabaseHelper not initialised.");
+                throw new DatabaseException("DatabaseHelper not initialised.");
             }
 
             return new NetGearsContext(DatabaseConfiguration);
@@ -38,10 +35,12 @@ namespace NetGears.Database
 
         public NetGearsContext CreateDbContext(string[] args)
         {
-            var dbConfiguration = ConfigurationLoader.Instance.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            var dbConfiguration = ConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
 
             if (dbConfiguration == null)
-                throw new Exception("Cannot load database configuration");
+            {
+                throw new DatabaseException("Cannot load database configuration");
+            }
 
             return new NetGearsContext(dbConfiguration);
         }

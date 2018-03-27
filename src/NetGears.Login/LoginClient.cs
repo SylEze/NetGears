@@ -19,7 +19,9 @@ namespace NetGears.Login
             var deserializedPacket = packet as PacketBase;
 
             if (packet == null)
+            {
                 return;
+            }
 
             PacketHandler<LoginClient, PacketBase>.ExecuteHandler(this, deserializedPacket);
         }

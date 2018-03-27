@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using log4net;
 using log4net.Config;
 using log4net.Repository;
 
 namespace NetGears.Core.Logger
 {
-    public class Logger
+    public static class Logger
     {
         private static ILog _log;
 
@@ -35,14 +33,24 @@ namespace NetGears.Core.Logger
             _log?.Warn($"{message}");
         }
 
-        public static void Error(object message, Exception ex = null)
+        public static void Error(object message, Exception ex)
         {
             _log?.Error($"{message} {ex}");
         }
 
-        public static void Fatal(object message, Exception ex = null)
+        public static void Error(object message)
+        {
+            _log?.Error($"{message}");
+        }
+
+        public static void Fatal(object message, Exception ex)
         {
             _log?.Fatal($"{message} {ex}");
+        }
+
+        public static void Fatal(object message)
+        {
+            _log?.Fatal($"{message}");
         }
     }
 }

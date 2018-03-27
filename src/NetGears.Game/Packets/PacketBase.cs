@@ -6,7 +6,7 @@ namespace NetGears.Game.Packets
 {
     public abstract class PacketBase : NetPacketBase
     {
-        public PacketBase(byte[] buffer)
+        protected PacketBase(byte[] buffer)
         {
             Buffer = buffer;
         }
