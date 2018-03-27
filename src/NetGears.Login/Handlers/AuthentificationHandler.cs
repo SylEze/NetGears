@@ -1,4 +1,5 @@
 ﻿using NetGears.Core.Logger;
+using NetGears.Database;
 using NetGears.Game.Packets.Client;
 
 namespace NetGears.Login.Handlers
@@ -13,6 +14,17 @@ namespace NetGears.Login.Handlers
         public static void CheckUserCredentials(LoginClient client, AccountPacket packet)
         {
             Logger.Info($"account {packet?.Username} {packet?.Password}");
+
+            using (var context = DatabaseFactory.GetNetGearsContext())
+            {
+                var account = context.AccountRepository.Get(x =>
+                    x.Username == packet?.Username && x.Password == packet?.Password);
+
+                if (account == null)
+                {
+                    Logger.Info($"{client.Id} bad credentials");
+                }
+            }
         }
     }
 }

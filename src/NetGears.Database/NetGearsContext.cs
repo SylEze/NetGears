@@ -1,7 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using NetGears.Core.Configuration;
-using NetGears.Core.Logger;
 using NetGears.Database.Entities;
 using NetGears.Database.Repositories;
 
