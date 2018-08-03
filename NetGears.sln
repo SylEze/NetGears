@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{90398CCC-22AE-4C79-970E-FF112B64BE18}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{459F0707-9CE2-4100-B5A3-4A2229F3DDAD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetGears.Login", "src\NetGears.Login\NetGears.Login.csproj", "{536F0FA5-4E3F-4359-B7F1-17509074E589}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetGears.Core", "src\NetGears.Core\NetGears.Core.csproj", "{8196EF38-D5F8-43EE-B6EC-79602F5F2CE4}"
