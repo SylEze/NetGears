@@ -1,56 +1,110 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
-using log4net;
-using log4net.Config;
-using log4net.Repository;
+using NLog;
+using NLog.Conditions;
+using NLog.Config;
+using NLog.Targets;
 
 namespace NetGears.Core.Logger
 {
-    public static class Logger
+    public class Logger
     {
-        private static ILog _log;
+        private const string DefaultLayout = "[${date}][${level:uppercase=true}][${logger:shortName=true}] ${message} ${exception:format=tostring}";
 
-        public static void Initialize(Type type)
+        private ILogger _log { get; }
+
+        private Logger(Type type) => _log = LogManager.GetLogger(type.ToString());
+
+        /// <summary>
+        /// Initialize logger's configuration.
+        /// Refer to https://github.com/nlog/NLog/wiki/Layout-Renderers for custom layouts.
+        /// </summary>
+        /// <param name="consoleLayout"></param>
+        /// <param name="fileLayout"></param>
+        public static void Initialize(string consoleLayout, string fileLayout)
         {
-            ILoggerRepository loggerRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-            XmlConfigurator.Configure(loggerRepository, new FileInfo("log4net.config"));
-            _log = LogManager.GetLogger(type);
+            var config = new LoggingConfiguration();
+            var consoleTarget = new ColoredConsoleTarget();
+            var fileTarget = new FileTarget();
+
+            consoleTarget.Layout = consoleLayout;
+
+            var infoHighlightRule = new ConsoleRowHighlightingRule
+            {
+                Condition = ConditionParser.ParseExpression("level == LogLevel.Info"),
+                ForegroundColor = ConsoleOutputColor.Green
+            };
+            var errorHighlightRule = new ConsoleRowHighlightingRule
+            {
+                Condition = ConditionParser.ParseExpression("level == LogLevel.Error"),
+                ForegroundColor = ConsoleOutputColor.Red
+            };
+            var warnHighlightingRule = new ConsoleRowHighlightingRule
+            {
+                Condition = ConditionParser.ParseExpression("level == LogLevel.Warn"),
+                ForegroundColor = ConsoleOutputColor.DarkYellow
+            };
+            consoleTarget.RowHighlightingRules.Add(infoHighlightRule);
+            consoleTarget.RowHighlightingRules.Add(errorHighlightRule);
+            consoleTarget.RowHighlightingRules.Add(warnHighlightingRule);
+
+            fileTarget.Layout = fileLayout;
+            fileTarget.FileName = "logs/" + DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss") + ".log";
+
+            config.AddTarget("console", consoleTarget);
+            config.AddTarget("file", fileTarget);
+
+#if (DEBUG)
+            var rule1 = new LoggingRule("*", LogLevel.Trace, consoleTarget);
+            config.LoggingRules.Add(rule1);
+
+            var rule2 = new LoggingRule("*", LogLevel.Trace, fileTarget);
+            config.LoggingRules.Add(rule2);
+#elif (RELEASE)
+            var rule1 = new LoggingRule("*", LogLevel.Info, consoleTarget);
+            config.LoggingRules.Add(rule1);
+
+            var rule2 = new LoggingRule("*", LogLevel.Info, fileTarget);
+            config.LoggingRules.Add(rule2);
+#endif
+    
+            LogManager.Configuration = config;
         }
 
-        public static void Debug(object message)
+        public static void Initialize()
         {
-            _log?.Debug($"{message}");
+            Initialize(DefaultLayout, DefaultLayout);
         }
 
-        public static void Info(object message)
+        public static Logger GetLogger<TClass>() => new Logger(typeof(TClass));
+
+        public void Trace(string msg)
         {
-            _log?.Info($"{message}");
+            _log?.Trace(msg);
         }
 
-        public static void Warn(object message)
+        public void Debug(string msg)
         {
-            _log?.Warn($"{message}");
+            _log?.Debug(msg);
         }
 
-        public static void Error(object message, Exception ex)
+        public void Info(string msg)
         {
-            _log?.Error($"{message} {ex}");
+            _log?.Info(msg);
         }
 
-        public static void Error(object message)
+        public void Warn(string msg)
         {
-            _log?.Error($"{message}");
+            _log?.Warn(msg);
         }
 
-        public static void Fatal(object message, Exception ex)
+        public void Error(string msg, Exception ex)
         {
-            _log?.Fatal($"{message} {ex}");
+            _log?.Error(ex, msg);
         }
 
-        public static void Fatal(object message)
+        public void Fatal(string msg, Exception ex)
         {
-            _log?.Fatal($"{message}");
+            _log?.Fatal(ex, msg);
         }
     }
 }
