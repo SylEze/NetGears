@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetGears.Game.Enums
+﻿namespace NetGears.Game.Enum
 {
     public enum LoginPacketId : short
     {
