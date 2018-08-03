@@ -1,48 +1,53 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Design;
-using NetGears.Core.Configuration;
+﻿using Microsoft.EntityFrameworkCore.Design;
 using NetGears.Core.Logger;
+using NetGears.Core.Misc;
 
 namespace NetGears.Database
 {
-    public class DatabaseFactory : IDesignTimeDbContextFactory<NetGearsContext>
+    public class DatabaseFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
-        private const string DatabaseConfigurationPath = "database.json";
+        private static readonly Logger Logger = Logger.GetLogger<DatabaseFactory>();
+        
+        private const string DatabaseConfigurationPath = "config/database.json";
 
         private static DatabaseConfiguration DatabaseConfiguration { get; set; }
+        
+        private static DatabaseContext DatabaseContext { get; set; }
 
         public static void Initialize()
         {
             if (DatabaseConfiguration != null)
             {
-                throw new DatabaseException("DatabaseHelper already initialised.");
+                throw new DatabaseException("Database factory already initialized.");
             }
 
-            DatabaseConfiguration = ConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            DatabaseConfiguration = JsonConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            
+            DatabaseContext = new DatabaseContext(DatabaseConfiguration);
 
-            Logger.Info("Database configuration loaded.");
+            Logger.Info("Database factory initialized..");
         }
 
-        public static NetGearsContext GetNetGearsContext()
+        public static DatabaseContext GetNetGearsContext()
         {
-            if (DatabaseConfiguration == null)
+            if (DatabaseConfiguration == null || DatabaseContext == null)
             {
-                throw new DatabaseException("DatabaseHelper not initialised.");
+                throw new DatabaseException("Database factory not initialized.");
             }
 
-            return new NetGearsContext(DatabaseConfiguration);
+            return DatabaseContext;
         }
 
-        public NetGearsContext CreateDbContext(string[] args)
+        public DatabaseContext CreateDbContext(string[] args)
         {
-            var dbConfiguration = ConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            var dbConfiguration = JsonConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
 
             if (dbConfiguration == null)
             {
-                throw new DatabaseException("Cannot load database configuration");
+                throw new DatabaseException("Cannot load database configuration.");
             }
 
-            return new NetGearsContext(dbConfiguration);
+            return new DatabaseContext(dbConfiguration);
         }
     }
 }
