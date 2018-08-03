@@ -1,11 +1,13 @@
 ﻿using NetGears.Core.Logger;
 using NetGears.Database;
-using NetGears.Game.Packets.Client;
+using NetGears.Game.Packet.Login.Client;
 
-namespace NetGears.Login
+namespace NetGears.Login.Server
 {
     public class LoginPacketHandler
     {
+        private static readonly Logger Logger = Logger.GetLogger<LoginPacketHandler>();
+        
         public static void CheckVersion(LoginClient client, VersionPacket packet)
         {
             Logger.Info($"check version {client.Id}");

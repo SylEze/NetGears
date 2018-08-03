@@ -1,18 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\bin\login\netcoreapp2.0\</OutputPath>
+    <OutputPath>../../bin/</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\bin\login\netcoreapp2.0\</OutputPath>
+    <OutputPath>../../bin/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Ether.Network" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
@@ -22,7 +21,7 @@
     </ProjectReference>
     <ProjectReference Include="..\NetGears.Game\NetGears.Game.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Misc" />
-  </ItemGroup>
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
 </Project>
