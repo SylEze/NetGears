@@ -10,7 +10,7 @@
     <OutputPath>..\..\bin\login\netcoreapp2.0\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Ether.Network" Version="2.0.1" />
+    <PackageReference Include="Ether.Network" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.5" />
   </ItemGroup>
@@ -23,11 +23,6 @@
     <ProjectReference Include="..\NetGears.Game\NetGears.Game.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="server.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Misc" />
   </ItemGroup>
 </Project>
