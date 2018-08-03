@@ -1,24 +1,15 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
-using NetGears.Database.Entities;
-using NetGears.Database.Repositories;
-
 namespace NetGears.Database
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<Account> Accounts { get; set; }
-        
-        public IRepository<Account> AccountRepository { get; }
-
         public DatabaseConfiguration DatabaseConfiguration { get; }
 
         public DatabaseContext(DatabaseConfiguration configuration)
         {
             DatabaseConfiguration = configuration;
-
-            AccountRepository = new AccountRepository(this);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
