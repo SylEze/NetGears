@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+
 using NetGears.Database.Entities;
 using NetGears.Database.Repositories;
 
 namespace NetGears.Database
 {
-    public class NetGearsContext : DbContext
+    public class DatabaseContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
         
@@ -13,7 +14,7 @@ namespace NetGears.Database
 
         public DatabaseConfiguration DatabaseConfiguration { get; }
 
-        public NetGearsContext(DatabaseConfiguration configuration)
+        public DatabaseContext(DatabaseConfiguration configuration)
         {
             DatabaseConfiguration = configuration;
 
