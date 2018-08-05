@@ -1,4 +1,5 @@
 ﻿using System;
+using NetGears.Core.Logger;
 using NetGears.Login.Server;
 
 namespace NetGears.Login
@@ -10,7 +11,9 @@ namespace NetGears.Login
         private static void Main(string[] args)
         {
             Console.Title = Title;
-            
+
+            Logger.Initialize();
+
             using (var loginServer = new LoginServer())
             {
                 Console.CancelKeyPress += delegate(object sender, ConsoleCancelEventArgs e)

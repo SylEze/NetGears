@@ -18,24 +18,18 @@ namespace NetGears.Login.Server
 
         public LoginServer()
         {
-            Initialize();
+            LoginConfiguration = JsonConfigurationLoader.Load<LoginConfiguration>(ServerConfigurationPath);
+            Configuration.Host = LoginConfiguration.Host;
+            Configuration.Port = LoginConfiguration.Port;
+            Configuration.MaximumNumberOfConnections = (int)LoginConfiguration.MaxConnections;
+            Configuration.Backlog = 100;
+            Configuration.BufferSize = 4096;
         }
 
         protected override void Initialize()
         {
-            Logger.Initialize();
-            
-            LoginConfiguration = JsonConfigurationLoader.Load<LoginConfiguration>(ServerConfigurationPath);
-            Configuration.Host = LoginConfiguration.Host;
-            Configuration.Port = LoginConfiguration.Port;
-            Configuration.MaximumNumberOfConnections = (int) LoginConfiguration.MaxConnections;
-            Configuration.Backlog = 100;
-            Configuration.BufferSize = 4096;
-            
             PacketHandler<LoginClient, PacketBase>.LoadPackets(PacketServerType.LOGIN);
             PacketHandler<LoginClient, PacketBase>.LoadHandlers<LoginPacketHandler>();
-                
-            Logger.Info($"Server initialized on {Configuration.Host}:{Configuration.Port}.");
         }
 
         protected override void OnClientConnected(LoginClient connection)
