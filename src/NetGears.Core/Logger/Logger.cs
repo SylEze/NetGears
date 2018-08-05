@@ -14,6 +14,8 @@ namespace NetGears.Core.Logger
 
         private Logger(Type type) => _log = LogManager.GetLogger(type.ToString());
 
+        private Logger(string loggerName) => _log = LogManager.GetLogger(loggerName);
+
         /// <summary>
         /// Initialize logger's configuration.
         /// Refer to https://github.com/nlog/NLog/wiki/Layout-Renderers for custom layouts.
@@ -76,6 +78,8 @@ namespace NetGears.Core.Logger
         }
 
         public static Logger GetLogger<TClass>() => new Logger(typeof(TClass));
+
+        public static Logger GetLogger(string loggerName) => new Logger(loggerName);
 
         public void Trace(string msg)
         {

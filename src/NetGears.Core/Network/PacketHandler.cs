@@ -8,7 +8,7 @@ namespace NetGears.Core.Network
 {
     public class PacketHandler<TClient, TPacket> where TPacket : IPacket
     {
-        private static readonly Logger.Logger Logger = NetGears.Core.Logger.Logger.GetLogger<PacketHandler<TClient, TPacket>>();
+        private static readonly Logger.Logger Logger = NetGears.Core.Logger.Logger.GetLogger("PacketHandler");
         
         /// <summary>
         /// Dictionary which contains method references to invoke
