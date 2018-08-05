@@ -3,7 +3,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>NetGears.Game</AssemblyName>
     <RootNamespace>NetGears.Game</RootNamespace>
-    <OutputPath>C:\Users\Syl\Documents\NetGears\bin\game\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath />
@@ -11,9 +10,6 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath />
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Ether.Network" Version="2.0.1" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
   </ItemGroup>
