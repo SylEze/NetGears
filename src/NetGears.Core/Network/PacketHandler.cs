@@ -26,7 +26,7 @@ namespace NetGears.Core.Network
                 .GetTypes()
                 .Where(m => m.GetCustomAttributes(typeof(PacketHeaderAttribute), false)
                 .Any(x => ((PacketHeaderAttribute) x).ServerType == serverType && 
-                          ((PacketHeaderAttribute) x).SenderType == PacketSenderType.SERVER))
+                          ((PacketHeaderAttribute) x).SenderType == PacketSenderType.CLIENT))
                 .ToList();
 
             foreach (var packet in packets)
