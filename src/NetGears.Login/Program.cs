@@ -1,5 +1,6 @@
 ﻿using System;
 using NetGears.Core.Logger;
+using NetGears.Database;
 using NetGears.Login.Server;
 
 namespace NetGears.Login
@@ -13,6 +14,8 @@ namespace NetGears.Login
             Console.Title = Title;
 
             Logger.Initialize();
+
+            DatabaseFactory.Initialize();
 
             using (var loginServer = new LoginServer())
             {

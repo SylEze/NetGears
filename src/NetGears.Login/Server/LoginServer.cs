@@ -1,4 +1,5 @@
 ﻿using System;
+using Ether.Network.Packets;
 using Ether.Network.Server;
 using NetGears.Core.Logger;
 using NetGears.Core.Misc;
@@ -18,19 +19,29 @@ namespace NetGears.Login.Server
 
         public LoginServer()
         {
+            Logger.Info("Instantiating server...");
+
             LoginConfiguration = JsonConfigurationLoader.Load<LoginConfiguration>(ServerConfigurationPath);
             Configuration.Host = LoginConfiguration.Host;
             Configuration.Port = LoginConfiguration.Port;
             Configuration.MaximumNumberOfConnections = (int)LoginConfiguration.MaxConnections;
             Configuration.Backlog = 100;
             Configuration.BufferSize = 4096;
+
+            Logger.Info("Server instantiated.");
         }
 
         protected override void Initialize()
         {
+            Logger.Info("Initializing server...");
+
             PacketHandler<LoginClient, PacketBase>.LoadPackets(PacketServerType.LOGIN);
             PacketHandler<LoginClient, PacketBase>.LoadHandlers<LoginPacketHandler>();
+
+            Logger.Info("Server initialized.");
         }
+
+        protected override IPacketProcessor PacketProcessor => base.PacketProcessor;
 
         protected override void OnClientConnected(LoginClient connection)
         {
