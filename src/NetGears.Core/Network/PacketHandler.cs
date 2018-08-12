@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using NetGears.Core.Extensions;
+using NetGears.Core.Misc;
 
 namespace NetGears.Core.Network
 {
     public class PacketHandler<TClient, TPacket> where TPacket : IPacket
     {
-        private static readonly Logger.Logger Logger = NetGears.Core.Logger.Logger.GetLogger("PacketHandler");
+        private static readonly Logger.Logger Logger = Core.Logger.Logger.GetLogger("PacketHandler");
         
         /// <summary>
         /// Dictionary which contains method references to invoke
@@ -51,29 +53,29 @@ namespace NetGears.Core.Network
 
                 if (parameters.Length != 2)
                 {
-                    throw new ArgumentException($"There must be two arguments in handler method: ${method.Name}");
+                    throw new ArgumentException($"There must be two arguments in handler method: ${method.Name}.");
                 }
 
                 if (parameters[0].Type != typeof(TClient))
                 {
                     throw new ArgumentException(
-                        $"${method.Name} First argument must be of type: ${typeof(TClient)}\tWas of type: ${parameters[0].Type}");
+                        $"${method.Name} First argument must be of type: ${typeof(TClient)}.");
                 }
 
                 if (parameters[1].Type.BaseType != typeof(TPacket))
                 {
                     throw new ArgumentException(
-                        $"${method.Name} Second argument must derived from : ${typeof(TPacket)}\tWas of type: ${parameters[1].Type}");
+                        $"${method.Name} Second argument must derived from : ${typeof(TPacket)}.");
                 }
 
                 if (!method.IsStatic)
                 {
-                    throw new ArgumentException("The provided method must be static.", "method");
+                    throw new InvalidOperationException("The provided method must be static.");
                 }
 
                 if (method.IsGenericMethod)
                 {
-                    throw new ArgumentException("The provided method must not be generic.", "method");
+                    throw new InvalidOperationException("The provided method must not be generic.");
                 }
 
                 var deleg = method.CreateDelegate(Expression.GetDelegateType(
@@ -87,6 +89,58 @@ namespace NetGears.Core.Network
             }
         }
 
+        public static IReadOnlyCollection<TPacket> DeserializePackets(byte[] buffer)
+        {
+            var result = new List<TPacket>();
+
+            var bufferIndex = 0;
+
+            deserialize:
+
+            //A StreetGears packet shouldn't have a length inferior than 5
+            if (buffer.Length - bufferIndex < 5)
+            {
+                return result;
+            }
+
+            var length = BitConverter.ToInt16(buffer, bufferIndex);
+            var id = BitConverter.ToInt16(buffer, bufferIndex + 2);
+            var hash = buffer[bufferIndex + 4];
+
+            if (buffer.Length < bufferIndex + length)
+            {
+                return result;
+            }
+
+            var buff = buffer.GetSubArray(bufferIndex, length);
+            var packet = GetPacket(id, length, hash, buff);
+
+            bufferIndex += length;
+
+            packet?.Deserialize(buff);
+
+            result.Add(packet);
+
+            if (bufferIndex < buffer.Length)
+            {
+                goto deserialize;
+            }
+
+            return result;
+        }
+
+        private static TPacket GetPacket(short id, short length, byte hash, byte[] buffer)
+        {
+            foreach (var packetType in PacketTypes)
+            {
+                if (packetType.Key.Id == id)
+                {
+                    var result = InstanceHelper.CreateInstanceOf<TPacket>(packetType.Value, buffer);
+                    return result;
+                }
+            }
+            return default(TPacket);
+        }
 
         public static void ExecuteHandler(TClient client, TPacket packet)
         {
