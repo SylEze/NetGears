@@ -9,12 +9,12 @@ namespace NetGears.Login.Server
         
         public static void CheckVersion(LoginClient client, VersionPacket packet)
         {
-            Logger.Info($"check version {client.Id}");
+            Logger.Debug($"({client.Id}) Check version LANG:{packet.Lang} VER:{packet.StreetGearsVersion}");
         }
         
         public static void CheckUserCredentials(LoginClient client, AccountPacket packet)
         {
-            Logger.Info($"account {packet?.Username} {packet?.Password}");
+            Logger.Debug($"({client.Id}) Check credentials USERNAME:{packet.Username} PW:{packet.Password}");
         }
     }
 }
