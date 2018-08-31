@@ -133,6 +133,7 @@ namespace NetGears.Core.Network
                 if (packetType.Key.Id == id)
                 {
                     var result = InstanceHelper.CreateInstanceOf<TPacket>(packetType.Value, buffer);
+                    result.Deserialize(buffer);
                     return result;
                 }
             }
