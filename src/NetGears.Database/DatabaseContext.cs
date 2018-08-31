@@ -1,11 +1,15 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 
+using NetGears.Game.Data.TransferObject;
+
 namespace NetGears.Database
 {
     public class DatabaseContext : DbContext
     {
         public DatabaseConfiguration DatabaseConfiguration { get; }
+
+        public DbSet<AccountDto> Accounts { get; }
 
         public DatabaseContext(DatabaseConfiguration configuration)
         {
