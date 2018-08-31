@@ -14,8 +14,8 @@ namespace NetGears.Game.Packet.Login.Client
 
         public override void Deserialize(byte[] buffer)
         {
-            Username = Encoding.Default.GetString(buffer, 5, 19).Replace("\0", "");
-            Password = Encoding.Default.GetString(buffer, 22, 32).Replace("\0", "");
+            Username = Encoding.Default.GetString(buffer, 0, 19).Replace("\0", "");
+            Password = Encoding.Default.GetString(buffer, 19, 32).Replace("\0", "");
         }
 
         public override byte[] Serialize()
