@@ -17,32 +17,26 @@ namespace NetGears.Login.Server
 
         public LoginConfiguration LoginConfiguration { get; set; }
 
+        protected override IPacketProcessor PacketProcessor => new LoginPacketProcessor();
+
         public LoginServer()
         {
-            Logger.Info("Instantiating server...");
-
             LoginConfiguration = JsonConfigurationLoader.Load<LoginConfiguration>(ServerConfigurationPath);
             Configuration.Host = LoginConfiguration.Host;
             Configuration.Port = LoginConfiguration.Port;
             Configuration.MaximumNumberOfConnections = (int)LoginConfiguration.MaxConnections;
             Configuration.Backlog = 100;
             Configuration.BufferSize = 4096;
-
-            Logger.Info("Server instantiated.");
         }
 
         protected override void Initialize()
         {
-            Logger.Info("Initializing server...");
-
             PacketHandler<LoginClient, PacketBase>.LoadPackets(PacketServerType.LOGIN);
             PacketHandler<LoginClient, PacketBase>.LoadHandlers<LoginPacketHandler>();
 
-            Logger.Info("Server initialized.");
+            Logger.Info($"Server initialized on {Configuration.Host}:{Configuration.Port}.");
         }
-
-        protected override IPacketProcessor PacketProcessor => base.PacketProcessor;
-
+        
         protected override void OnClientConnected(LoginClient connection)
         {
             connection.Initialize(this);
