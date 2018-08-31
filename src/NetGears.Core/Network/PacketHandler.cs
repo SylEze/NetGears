@@ -11,7 +11,7 @@ namespace NetGears.Core.Network
     public class PacketHandler<TClient, TPacket> where TPacket : IPacket
     {
         private static readonly Logger.Logger Logger = Core.Logger.Logger.GetLogger("PacketHandler");
-        
+
         /// <summary>
         /// Dictionary which contains method references to invoke
         /// Each key corresponds to a packet header defined by the user
@@ -97,8 +97,7 @@ namespace NetGears.Core.Network
 
             deserialize:
 
-            //A StreetGears packet shouldn't have a length inferior than 5
-            if (buffer.Length - bufferIndex < 5)
+            if (bufferIndex >= buffer.Length)
             {
                 return result;
             }
@@ -107,29 +106,27 @@ namespace NetGears.Core.Network
             var id = BitConverter.ToInt16(buffer, bufferIndex + 2);
             var hash = buffer[bufferIndex + 4];
 
-            if (buffer.Length < bufferIndex + length)
+            bufferIndex += 5;
+
+            Logger.Debug($"New packet with id:{id} and length:{length}");
+
+            if (length <= 0 || length + bufferIndex > buffer.Length)
             {
                 return result;
             }
-
-            var buff = buffer.GetSubArray(bufferIndex, length);
-            var packet = GetPacket(id, length, hash, buff);
-
-            bufferIndex += length;
-
-            packet?.Deserialize(buff);
-
-            result.Add(packet);
-
-            if (bufferIndex < buffer.Length)
+            else
             {
+                var buff = buffer.GetSubArray(bufferIndex, length);
+
+                result.Add(GetPacket(id, buff));
+
+                bufferIndex += length;
+
                 goto deserialize;
             }
-
-            return result;
         }
 
-        private static TPacket GetPacket(short id, short length, byte hash, byte[] buffer)
+        private static TPacket GetPacket(short id, byte[] buffer)
         {
             foreach (var packetType in PacketTypes)
             {
@@ -139,12 +136,11 @@ namespace NetGears.Core.Network
                     return result;
                 }
             }
-            return default(TPacket);
+            return default;
         }
 
         public static void ExecuteHandler(TClient client, TPacket packet)
         {
-
             MethodReferences[packet.GetType()].DynamicInvoke(client, packet);
         }
     }
