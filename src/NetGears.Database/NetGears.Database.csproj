@@ -12,9 +12,13 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetGears.Core\NetGears.Core.csproj" />
+    <ProjectReference Include="..\NetGears.Game\NetGears.Game.csproj" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccessLayer\" />
   </ItemGroup>
 </Project>
