@@ -25,7 +25,7 @@ namespace NetGears.Database
             
             DatabaseContext = new DatabaseContext(DatabaseConfiguration);
 
-            Logger.Info("Database factory initialized..");
+            Logger.Info("Database factory initialized.");
         }
 
         public static DatabaseContext GetNetGearsContext()
