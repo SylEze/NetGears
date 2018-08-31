@@ -1,5 +1,6 @@
 ﻿using NetGears.Core.Network;
 using NetGears.Game.Enum;
+using System.Text;
 
 namespace NetGears.Game.Packet.Login.Client
 {
@@ -12,8 +13,8 @@ namespace NetGears.Game.Packet.Login.Client
 
         public override void Deserialize(byte[] buffer)
         {
-            StreetGearsVersion = "StreetGearsVersion";
-            Lang = "Lang";
+            StreetGearsVersion = Encoding.Default.GetString(buffer, 0, 20).Replace("\0", "");
+            Lang = Encoding.Default.GetString(buffer, 20, 3).Replace("\0", "");
         }
 
         public override byte[] Serialize()
