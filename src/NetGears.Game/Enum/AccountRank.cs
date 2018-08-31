@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NetGears.Game.Enum
+﻿namespace NetGears.Game.Enum
 {
     public enum AccountRank
     {
+        INACTIVE = -2,
         BANNED = -1,
         NONE,
         GM,
