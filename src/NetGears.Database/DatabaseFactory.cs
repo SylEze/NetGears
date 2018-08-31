@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Design;
 using NetGears.Core.Logger;
 using NetGears.Core.Misc;
+using System.IO;
 
 namespace NetGears.Database
 {
@@ -40,11 +41,12 @@ namespace NetGears.Database
 
         public DatabaseContext CreateDbContext(string[] args)
         {
-            var dbConfiguration = JsonConfigurationLoader.Load<DatabaseConfiguration>(DatabaseConfigurationPath);
+            var path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "/bin/config/database.json";
+            var dbConfiguration = JsonConfigurationLoader.Load<DatabaseConfiguration>(path);
 
             if (dbConfiguration == null)
             {
-                throw new DatabaseException("Cannot load database configuration.");
+                throw new DatabaseException($"{path} Cannot load database configuration.");
             }
 
             return new DatabaseContext(dbConfiguration);
