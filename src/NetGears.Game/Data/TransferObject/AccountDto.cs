@@ -18,12 +18,12 @@ namespace NetGears.Game.Data.TransferObject
 
         public DateTime LastConnectionDate { get; set; }
 
-        public IPAddress LastConnectionIp { get; set; }
+        public string LastConnectionIp { get; set; }
 
         public string RegistrationEmail { get; set; }
 
         public DateTime RegistrationDate { get; set; }
 
-        public IPAddress RegistrationIp { get; set; }
+        public string RegistrationIp { get; set; }
     }
 }
