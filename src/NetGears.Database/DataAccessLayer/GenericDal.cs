@@ -30,12 +30,12 @@ namespace NetGears.Database.DataAccessLayer
             _dbSet.Add(dto);
         }
 
-        public void Add(IEnumerable<TDto> dtos)
+        public void AddRange(IEnumerable<TDto> dtos)
         {
             _dbSet.AddRange(dtos);
         }
 
-        public void Add(params TDto[] dtos)
+        public void AddRange(params TDto[] dtos)
         {
             _dbSet.AddRange(dtos);
         }
@@ -45,12 +45,12 @@ namespace NetGears.Database.DataAccessLayer
             _dbSet.Remove(dto);
         }
 
-        public void Remove(IEnumerable<TDto> dtos)
+        public void RemoveRange(IEnumerable<TDto> dtos)
         {
             _dbSet.RemoveRange(dtos);
         }
 
-        public void Remove(params TDto[] dtos)
+        public void RemoveRange(params TDto[] dtos)
         {
             _dbSet.RemoveRange(dtos);
         }
