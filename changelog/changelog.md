@@ -2,12 +2,14 @@
 
 ## 0.1 Version
 
- - [ ] **Database**
+ ### Database:
   - [ ] Add support for MySql
   - [ ] Add support for SqlServer
 
- - [ ] **Login server**
+ 
+ ### Login server:
   - [ ] Authentification with credentials
 
- - [ ] **ParkTown server**
+ 
+ ### ParkTown server:
   - [ ] Connection to ParkTown
